@@ -1,0 +1,132 @@
+[
+    {
+        "index": 1,
+        "text": "Annoyed",
+        "value": 15
+    },
+    {
+        "index": 2,
+        "text": "Frustrated",
+        "value": 20
+    },
+    {
+        "index": 3,
+        "text": "Joyful",
+        "value": 12
+    },
+    {
+        "index": 4,
+        "text": "Compassionate",
+        "value": 18
+    },
+    {
+        "index": 5,
+        "text": "Loath",
+        "value": 12
+    },
+    {
+        "index": 6,
+        "text": "Repugnant",
+        "value": 9
+    },
+    {
+        "index": 7,
+        "text": "Nervous",
+        "value": 20
+    },
+    {
+        "index": 8,
+        "text": "Worried",
+        "value": 10
+    },
+    {
+        "index": 9,
+        "text": "Desperate",
+        "value": 7
+    },
+    {
+        "index": 10,
+        "text": "Shamed",
+        "value": 12
+    },
+    {
+        "index": 11,
+        "text": "Afraid",
+        "value": 13
+    },
+    {
+        "index": 12,
+        "text": "Gloomy",
+        "value": 3
+    },
+    {
+        "index": 13,
+        "text": "Unhappy",
+        "value": 15
+    },
+    {
+        "index": 14,
+        "text": "Distasteful",
+        "value": 3
+    },
+    {
+        "index": 15,
+        "text": "Indulgent",
+        "value": 12
+    },
+    {
+        "index": 16,
+        "text": "Amused",
+        "value": 14
+    },
+    {
+        "index": 17,
+        "text": "Pleased",
+        "value": 12
+    },
+    {
+        "index": 18,
+        "text": "Helpless",
+        "value": 18
+    },
+    {
+        "index": 19,
+        "text": "Furious",
+        "value": 15
+    },
+    {
+        "index": 20,
+        "text": "Discouraged",
+        "value": 11
+    },
+    {
+        "index": 21,
+        "text": "Melancholy",
+        "value": 6
+    },
+    {
+        "index": 22,
+        "text": "Relieved",
+        "value": 15
+    },
+    {
+        "index": 23,
+        "text": "Excited",
+        "value": 14
+    },
+    {
+        "index": 24,
+        "text": "Anxious",
+        "value": 15
+    },
+    {
+        "index": 25,
+        "text": "Bitterness",
+        "value": 10
+    },
+    {
+        "index": 27,
+        "text": "Uneasy",
+        "value": 21
+    }
+]

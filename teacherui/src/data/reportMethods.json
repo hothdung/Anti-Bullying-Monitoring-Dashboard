@@ -1,0 +1,74 @@
+[
+    {
+        "month": "January",
+        "auto": 35,
+        "classmate": 10,
+        "self": 3
+    },
+    {
+        "month": "February",
+        "auto": 25,
+        "classmate": 20,
+        "self": 15
+    },
+    {
+        "month": "March",
+        "auto": 45,
+        "classmate": 5,
+        "self": 13
+    },
+    {
+        "month": "April",
+        "auto": 40,
+        "classmate": 10,
+        "self": 3
+    },
+    {
+        "month": "May",
+        "auto": 35,
+        "classmate": 20,
+        "self": 11
+    },
+    {
+        "month": "June",
+        "auto": 50,
+        "classmate": 23,
+        "self": 12
+    },
+    {
+        "month": "July",
+        "auto": 30,
+        "classmate": 20,
+        "self": 13
+    },
+    {
+        "month": "August",
+        "auto": 45,
+        "classmate": 12,
+        "self": 7
+    },
+    {
+        "month": "September",
+        "auto": 11,
+        "classmate": 23,
+        "self": 11
+    },
+    {
+        "month": "October",
+        "auto": 34,
+        "classmate": 10,
+        "self": 5
+    },
+    {
+        "month": "November",
+        "auto": 30,
+        "classmate": 15,
+        "self": 7
+    },
+    {
+        "month": "December",
+        "auto": 30,
+        "classmate": 5,
+        "self": 11
+    }
+]

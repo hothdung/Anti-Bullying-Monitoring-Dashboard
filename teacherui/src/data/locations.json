@@ -1,0 +1,26 @@
+[
+    {
+        "location": "Toilet",
+        "frequency": 70
+    },
+    {
+        "location": "Schoolyard",
+        "frequency": 60
+    },
+    {
+        "location": "Classroom",
+        "frequency": 55
+    },
+    {
+        "location": "Hallway",
+        "frequency": 45
+    },
+    {
+        "location": "Way to school",
+        "frequency": 20
+    },
+    {
+        "location": "At home",
+        "frequency": 17
+    }
+]

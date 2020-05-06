@@ -1,0 +1,49 @@
+[
+    {
+        "id": 0,
+        "nameEmotion": "Overview",
+        "total": 100,
+        "ePercentage": [
+            20,
+            40,
+            10,
+            10,
+            20
+        ]
+    },
+    {
+        "id": 1,
+        "nameEmotion": "Anger",
+        "total": 100,
+        "percentage": 30,
+        "image": "/images/Anger.jpg"
+    },
+    {
+        "id": 2,
+        "nameEmotion": "Sadness",
+        "total": 100,
+        "percentage": 21,
+        "image": "/images/Sadness.jpg"
+    },
+    {
+        "id": 3,
+        "nameEmotion": "Fear",
+        "total": 100,
+        "percentage": 35,
+        "image": "/images/Fear.jpg"
+    },
+    {
+        "id": 4,
+        "nameEmotion": "Disgust",
+        "total": 100,
+        "percentage": 41,
+        "image": "/images/Disgust.jpg"
+    },
+    {
+        "id": 5,
+        "nameEmotion": "Enjoyment",
+        "total": 100,
+        "percentage": 55,
+        "image": "/images/Enjoyment.jpg"
+    }
+]

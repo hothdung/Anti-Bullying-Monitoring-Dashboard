@@ -1,0 +1,114 @@
+body {
+  margin: 0;
+  padding-top: 45px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+.studentsSidebar {
+  max-width: 180px;
+}
+
+.teacherUiRow {
+  display: flex;
+  flex-direction: row;
+}
+
+.yaxis path, .yaxis line {
+  fill: none;
+  stroke: none;
+}
+
+.yaxis text {
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.reportingTable {
+  padding: 50px;
+  overflow: hidden;
+}
+
+.addRow {
+  padding-bottom: 10px;
+}
+
+#deleteBtn {
+  margin-left: 15px;
+}
+
+#addBtn {
+  font-weight: bold;
+  margin-bottom: 8px;
+  float: right;
+}
+
+.tooltip {
+  position: absolute;
+  width: 120px;
+  height: 25px;
+  text-align: center;
+  padding-left: 22px;
+  font: 12px sans-serif;
+  background: #282828;
+  border: 0px;
+  border-radius: 5px;
+  pointer-events: none;
+  color: white;
+}
+
+.posNegtooltip {
+  position: absolute;
+  width: 60px;
+  height: 25px;
+  text-align: center;
+  padding-top: 5px;
+  font: 12px sans-serif;
+  background: #282828;
+  border: 0px;
+  border-radius: 5px;
+  pointer-events: none;
+  color: white;
+}
+
+.preloader {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  padding-left: 350px;
+  padding-right: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.creators {
+  display: flex;
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
+  font-size: 15px;
+  font-style: italic;
+}
+
+.hci-icon {
+  margin-right: 10px;
+  padding-bottom: 18px;
+}
+
+.navCol {
+  margin-bottom: 30px;
+}
+
+.bar1 {
+  opacity: 1;
+}
+
+.warningG {
+  width: 100%;
+}

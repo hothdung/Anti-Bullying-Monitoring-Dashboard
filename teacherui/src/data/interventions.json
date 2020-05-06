@@ -1,0 +1,29 @@
+[
+    {
+        "interventionType": "Intervention",
+        "place": "Hallway",
+        "students": "Franziska, Van, Jihwan",
+        "date": "2019-04-09",
+        "time": "1:15 PM",
+        "severity": "High",
+        "teachers": "Son"
+    },
+    {
+        "interventionType": "Consultation",
+        "place": "Office",
+        "students": "Kiroong, Dung, Adam",
+        "date": "2019-04-15",
+        "time": "2:30 PM",
+        "severity": "Medium",
+        "teachers": "Lee"
+    },
+    {
+        "interventionType": "Consultation",
+        "place": "Classroom",
+        "students": "Jutta, Mai, Adam",
+        "date": "2019-06-09",
+        "time": "9:15 AM",
+        "severity": "Medium",
+        "teachers": "Baek"
+    }
+]
