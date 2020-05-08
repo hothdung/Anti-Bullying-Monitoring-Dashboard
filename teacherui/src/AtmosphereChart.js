@@ -12,7 +12,7 @@ class AtmosphereChart extends Component {
             xAxisAttribute: "percentage",
             xAxisAttribute2: "total",
             img: "image",
-            width: 400,
+            width: 500,
             height: 350,
             legendWidth: 250,
             legendHeight: 25,

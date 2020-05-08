@@ -59,6 +59,7 @@ class App extends Component {
       <div>
         <Route exact path='/' render={() => (<Overview classNameVal={StudentData}
           onNavigate={this.setIndividualScreen}
+          stateScreen={this.state.screen}
         />)} />
         <Route path='/individual' render={() => (
           <IndividualScreen studentVal={this.state.studentName}

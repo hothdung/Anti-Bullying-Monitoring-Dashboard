@@ -11,8 +11,8 @@ class MultipleWarnings extends Component {
             in_color: this.props.colorVal,
             yAxisAttribute: "warningMax",
             xAxisAttribute: "date",
-            width: 1100,
-            height: 300,
+            width: window.innerWidth - 250,
+            height: 250
         }
         this.chartRef = React.createRef();
         this.drawLineChart = this.drawLineChart.bind(this);
@@ -83,7 +83,6 @@ class MultipleWarnings extends Component {
 
         path.attr("stroke-dashoffset", pathLength)
             .attr("stroke-dasharray", pathLength)
-            .transition(transitionOption)
             .attr("stroke-dashoffset", 0);
 
         const pathIndividual = bounds.append("path")
@@ -163,7 +162,7 @@ class MultipleWarnings extends Component {
     }
 
     render() {
-        return <div ref="canvas"></div>
+        return <div ref="canvas" style={{ marginTop: 40 }}></div>
     }
 }
 

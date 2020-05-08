@@ -284,7 +284,7 @@ class WarningFrequency extends Component {
     }
 
     render() {
-        return <div className="warningG" ref="canvas"></div>
+        return <div className="warningG" ref="canvas" style={{ marginTop: 40 }}></div>
     }
 }
 

@@ -8,8 +8,8 @@ class LocationsChart extends Component {
             data: this.props.locations,
             yAxisAttribute: "location",
             xAxisAttribute: "frequency",
-            width: 450,
-            height: 300,
+            width: 500,
+            height: 350,
         }
         this.chartRef = React.createRef();
         this.drawChart = this.drawChart.bind(this);
@@ -89,7 +89,7 @@ class LocationsChart extends Component {
         this.drawChart();
     }
     render() {
-        return <div ref="canvas">
+        return <div ref="canvas" style={{ marginTop: 50 }}>
         </div>
     }
 }

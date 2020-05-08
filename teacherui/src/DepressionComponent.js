@@ -9,7 +9,7 @@ class DepressionComponent extends Component {
         this.state = {
             data: this.props.depressiveInfo,
             studentName: this.props.studentVal,
-            width: 500,
+            width: 400,
             height: 200
         }
         this.chartRef = React.createRef();
@@ -20,9 +20,9 @@ class DepressionComponent extends Component {
     drawChart() {
         let dimensions = {
             margin: {
-                top: 15,
+                top: 0,
                 right: 15,
-                bottom: 40,
+                bottom: 0,
                 left: 20,
             }
         }
@@ -39,7 +39,7 @@ class DepressionComponent extends Component {
             .style("transform", `translate(${dimensions.margin.left}px,${dimensions.margin.top}px)`);
 
         var states = ["normal", "mild", "help needed", "depressive"],
-            segmentWidth = 80;
+            segmentWidth = 60;
 
         var colors = ['#39ff14', '#FFFF00', '#ffae19', '#ff0000'];
         var color = d3.scaleOrdinal()
@@ -59,7 +59,7 @@ class DepressionComponent extends Component {
             .attr("x", 0)
             .attr("y", 50)
             .attr("text-anchor", "start")
-            .style("font-size", "18px")
+            .style("font-size", "10px")
             .style("font-weight", "bold")
             .text(this.state.studentName + "' s depressive state lasts for"
             )
@@ -74,7 +74,7 @@ class DepressionComponent extends Component {
             .attr("x", 0)
             .attr("y", 80)
             .attr("text-anchor", "start")
-            .style("font-size", "158x")
+            .style("font-size", "10px")
             .style("font-weight", "bold")
             .text(startVal);
 
@@ -96,9 +96,9 @@ class DepressionComponent extends Component {
             .attr("x", 30)
             .attr("y", 80)
             .attr("text-anchor", "start")
-            .style("font-size", "18px")
+            .style("font-size", "10px")
             .style("font-weight", "bold")
-            .text(" days.");
+            .text("days.");
 
         bounds.append('rect')
             .attr("class", "initialRect")
@@ -135,7 +135,7 @@ class DepressionComponent extends Component {
             })
             .attr("y", 135)
             .attr("text-anchor", "start")
-            .style("font-size", "13px")
+            .style("font-size", "9px")
             .style("font-weight", "bold")
             .text(function (d) {
                 return d.status;
@@ -161,7 +161,7 @@ class DepressionComponent extends Component {
     }
     render() {
         return (
-            <div id='depressiveInfo' ref="canvas"></div>
+            <div id='depressiveInfo' ref="canvas" style={{ width: 100, height: 50 }}></div>
         )
     }
 }

@@ -27,8 +27,8 @@ function StudentsSidebar(props) {
         setSearchRes(results);
     }, [query]);
 
-    const handleClick = (index, color) => event => {
-        props.onNavigate(index, color);
+    const handleClick = (name, index, color) => event => {
+        props.onNavigate(name, index, color);
     }
 
     props.students.sort((a, b) => b.alert - a.alert);
