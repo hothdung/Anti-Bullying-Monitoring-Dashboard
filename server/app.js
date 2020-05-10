@@ -3,6 +3,7 @@ require('dotenv').config();
 var cors = require('cors');
 var mysql = require('mysql');
 var bodyParser = require('body-parser');
+var http = require('http');
 var app = express();
 
 
@@ -11,6 +12,8 @@ app.use(bodyParser.json());
 app.use(cors());
 
 
+// connection to interventions_db
+
 var connection = mysql.createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
@@ -18,6 +21,18 @@ var connection = mysql.createConnection({
     database: process.env.DB_DATABASE,
     port: process.env.DB_PORT
 })
+
+// connections to signals_db
+
+var signalsConnection = mysql.createConnection({
+    host: process.env.DB_SIG_HOST,
+    user: process.env.DB_SIG_USER,
+    password: process.env.DB_SIG_PASS,
+    database: process.env.DB_SIG_DATABASE,
+    port: process.env.DB_SIG_PORT
+});
+
+
 
 app.post('/interventions', function (req, res) {
     const intervention = {
@@ -52,7 +67,67 @@ app.get('/posts', function (req, res) {
     });
 })
 
+// app.post('/addSignal', function (req, res) {
 
+//     console.log("Hello from Here" + req);
+//     var signalType = req.body.body
+//     var dataObj = {};
+//     var q;
+//     if (signalType === "heartrate") {
+//         q = "INSERT INTO heartrate SET ?;";
+
+//         dataObj = {
+//             bpm: req.body.bpm,
+//             date: req.body.date,
+//             studentId: req.body.studentId
+//         }
+//         console.log(req.body.signalType);
+//         console.log("Here is the data Object " + dataObj);
+//     } else if (signalType === "locations") {
+//         dataObj = {
+//             long: req.body.long,
+//             lat: req.body.lat,
+//             date: req.body.date,
+//             studentId: req.body.studentId
+//         }
+//     }
+//     else if (signalType === "movements") {
+//         dataObj = {
+//             gravity: req.body.gravity,
+//             acceleration: req.body.acceleration,
+//             rotation: req.body.rotation,
+//             attitude: req.body.attitude,
+//             date: req.body.date,
+//             studentId: req.body.studentId
+//         }
+//     }
+//     else if (signalType === "audio") {
+//         dataObj = {
+//             audio: req.body.audio,
+//             date: req.body.date,
+//             studentId: req.body.studentId
+//         }
+//     }
+//     else {
+//         console.log("wrong signal type!")
+//     }
+
+//     signalsConnection.query(q, dataObj, function (error, result) {
+//         if (error) throw error;
+//         console.log(result);
+//     })
+//     res.status(200).end();
+//     console.log("Signal successfully added to the database");
+//     console.log("POST Request SENT To /addSignal");
+
+// }
+// )
+
+app.post('/addSignal', function (req, res) {
+    res.status(200).send('Hit successfully')
+    console.log("received the test message");
+    console.log(req.body);
+})
 
 app.listen(8080, function () {
     console.log("Server is listening on port 8080!");
