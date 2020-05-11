@@ -30,8 +30,6 @@ struct ShortCodeGenerator {
 // Date will be constructed in database --> server side
 class InterfaceController: WKInterfaceController {
     
-    var endPoint = "http://147.46.215.219:8080"
-    
     var saveUrl: URL?
     
     // instance of locationOutside exist already at runtime
@@ -55,9 +53,17 @@ class InterfaceController: WKInterfaceController {
     var motionManager: MovementManager!
     var movement: String = ""
     
-    
+    // fields for manual approach
     var manualLat: Double = 0.0
     var manualLong: Double = 0.0
+    var manualBpm: Double = 0.0
+    var manualGravity: String = ""
+    var manualAcceleration: String = ""
+    var manualRotation: String = ""
+    var manualAttitude: String = ""
+    var manualFallenDown: Bool = false
+    
+    
     var recordSession: AVAudioSession!
     var audioRecorder: AVAudioRecorder!
     var audioSettings = [String : Int]()
@@ -144,41 +150,38 @@ class InterfaceController: WKInterfaceController {
         print("Sending completed!")
     }
     
-    func sendSignal(){
-        let dict: Dictionary=["testMessage":"Hello my name is Dung!"]
+    func sendSignal(signalParams: Dictionary<String,Any>){
         
-        // create post request
-        guard let url = URL(string: "http://147.46.215.219:8080/addSignal") else{
-            return
-        } //PUT Your URL
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        
-        do{
-            request.httpBody = try JSONSerialization.data(withJSONObject:dict,options: .prettyPrinted)
-        }catch{
-            print(error.localizedDescription)
-        }
-        
-        request.addValue("application/json",forHTTPHeaderField: "Content-Type")
-        request.addValue("application/json", forHTTPHeaderField: "Accept-Type")
+        let jsonData = try? JSONSerialization.data(withJSONObject: signalParams)
         
         let session = URLSession.shared
-        session.dataTask(with:request,completionHandler: {(data,response,error) in
-            if let error = error {
+        let url = URL(string:"http://147.46.215.219:8080/addSignal")
+        var request = URLRequest(url:url!)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/json",forHTTPHeaderField: "Accept")
+        request.httpBody = jsonData
+        
+        let dataTask = session.uploadTask(with:request, from:jsonData){ data,response,error in
+            
+            if let error = error{
                 print("error: \(error)")
-            } else {
-                if let response = response as? HTTPURLResponse {
-                    print("statusCode: \(response.statusCode)")
-                }
-                if let data = data, let dataString = String(data: data, encoding: .utf8) {
-                    print("data: \(dataString)")
-                }
+                return
             }
             
-            print("Sending successful")
-            }).resume()
-        
+            guard let response = response as? HTTPURLResponse,
+                (200...299).contains(response.statusCode) else{
+                    print("Error at server side")
+                    return
+            }
+            if let mimeType = response.mimeType,
+                mimeType == "application/json",
+                let data = data,
+                let dataString = String(data: data, encoding: .utf8){
+                print("returned data is \(dataString)")
+            }
+        }
+        dataTask.resume()
     }
     
     
@@ -192,23 +195,22 @@ class InterfaceController: WKInterfaceController {
     }
     
     @IBAction func manualBtnPressed() {
-        // manual reporting functionality
-        // generating 6 character long unique id
         
-        let uniqueId = ShortCodeGenerator.getCode(length: 6)
-        let txtMsg = "I am student \(uniqueId) (manually). I need help!"
+        let studentId = "student"+ShortCodeGenerator.getCode(length: 6)
+        let txtMsg = "I am student \(studentId) (manually). I need help!"
         print(txtMsg)
-        
-        // sending lat and long (manualLat & manualLong)
+        let date = getCurrentDate()
+        var manualParam: Dictionary<String,Any>
+        if(manualLat != 0  && manualLong != 0 && manualBpm != 0 && !manualGravity.isEmpty && !manualAcceleration.isEmpty && !manualRotation.isEmpty && !manualAttitude.isEmpty){
+            manualParam = ["signalType": "manual", "long":manualLong, "lat":manualLat,"bpm": manualBpm, "gravity": manualGravity, "acceleration": manualAcceleration,"rotation":manualRotation, "attitude":manualAttitude,"fallenDown":manualFallenDown,"message": txtMsg,"date":date,"studentId":studentId] as [String : Any]
+            
+            sendSignal(signalParams: manualParam)
+        }
         
     }
     
     // when button clicked label is shown
     @IBAction func btnPressed() {
-        let uniqueId = ShortCodeGenerator.getCode(length: 6)
-        let txtMsg = "I am student \(uniqueId) (automatically). I need help!"
-        print(txtMsg)
-        
         if(!isRecording){
             let stopTitle = NSMutableAttributedString(string: "Stop Recording")
             stopTitle.setAttributes([NSAttributedString.Key.foregroundColor: UIColor.red], range: NSMakeRange(0, stopTitle.length))
@@ -252,17 +254,15 @@ extension InterfaceController: LocationOutsideDelegate {
         
         let latitude = newLocation.coordinate.latitude
         let longitude = newLocation.coordinate.longitude
+        let date = self.getCurrentDate()
+        let studentId = "student"+ShortCodeGenerator.getCode(length: 6)
         manualLat = latitude
         manualLong = longitude
         print("Latitude \(latitude)")
         print("Longitude \(longitude)")
         
-        let stringFrLat = "\(latitude)"
-        let stringFrLong = "\(longitude)"
-        let locationData = ["test": stringFrLat]
-        let locationData2=["test": stringFrLong]
-        //sendToServer(params: locationData)
-        //sendToServer(params: locationData2)
+        let locationParam: Dictionary = ["signalType": "locations", "long":longitude, "lat":latitude,"date":date,"studentId":studentId] as [String : Any]
+        sendSignal(signalParams: locationParam)
     }
     
     func processLocationFailure(error: NSError) {
@@ -275,14 +275,13 @@ extension InterfaceController: HeartRateManagerDelegate {
     
     func handleNewHeartRate(newHeartRate: Double) {
         print("New Heartrate \(newHeartRate)")
-        let signalType = "heartrate"
         let bpm = newHeartRate
+        manualBpm = newHeartRate
         let date = self.getCurrentDate()
         let studentId = "student"+ShortCodeGenerator.getCode(length: 6)
         
-        let heartrateParam: Dictionary = ["signalType": signalType, "bpm":bpm, "date":date,"studentId":studentId] as [String : Any]
-        //sendSignal(params: heartrateParam)
-          sendSignal()
+        let heartrateParam: Dictionary = ["signalType": "heartrate", "bpm":bpm, "date":date,"studentId":studentId] as [String : Any]
+        sendSignal(signalParams: heartrateParam)
     }
 }
 
@@ -290,14 +289,32 @@ extension InterfaceController: HeartRateManagerDelegate {
 extension InterfaceController: MovementDelegate {
     
     func evalMovForSending(toSend: Bool, gravStr: String, accelStr: String, rotationStr: String, attStr: String){
-        
+        var movementParam: Dictionary<String,Any>
         let tmp = "\(gravStr), \(accelStr), \(rotationStr), \(attStr), "
+        let studentId = "student"+ShortCodeGenerator.getCode(length: 6)
+        let date:String
         if toSend{
             print("Student has fallen down!")
             movement = "\(tmp) _1"
+            date = self.getCurrentDate()
+            movementParam = ["signalType": "movements","gravity":gravStr,"acceleration":accelStr,"rotation":rotationStr,"attitude":attStr,"fallenDown":toSend,"date":date, "studentId":studentId]
+            sendSignal(signalParams: movementParam)
+            manualGravity = gravStr
+            manualAcceleration = accelStr
+            manualRotation = rotationStr
+            manualAttitude = attStr
+            manualFallenDown = toSend
             print(movement)
         }else{
             movement = "\(tmp) _2"
+            date = self.getCurrentDate()
+            movementParam = ["signalType": "movements","gravity":gravStr,"acceleration":accelStr,"rotation":rotationStr,"attitude":attStr,"fallenDown":toSend,"date":date, "studentId":studentId]
+            sendSignal(signalParams: movementParam)
+            manualGravity = gravStr
+            manualAcceleration = accelStr
+            manualRotation = rotationStr
+            manualAttitude = attStr
+            manualFallenDown = toSend
             print(movement)
         }
     }
