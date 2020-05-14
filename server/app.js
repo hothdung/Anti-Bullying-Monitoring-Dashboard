@@ -5,6 +5,11 @@ var mysql = require('mysql');
 var bodyParser = require('body-parser');
 var http = require('http');
 var app = express();
+var multer = require('multer');
+const path = require('path');
+//var upload = multer({ dest: 'uploads/', limits: { fieldSize: 10000000000 } }).any()
+
+// building storage engine  cb --> callback
 
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -12,6 +17,37 @@ app.use(bodyParser.json());
 app.use(bodyParser.raw({ type: 'audio/m4a', limit: '60mb' }))
 app.use(cors());
 
+app.use(express.static('./public'));
+
+const storage = multer.diskStorage({
+    destination: './public/uploads/',
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    }
+});
+
+// Init upload
+const upload = multer({
+    storage: storage,
+    limits: { fileSize: 100000000 }
+}).single('audioName');
+
+// checking the extension and mimeType
+function checkFileType(file, cb) {
+
+    const fileTypes = /mp4|m4a/;
+    // checking extension
+    const extensionName = fileTypes.test(path.extname((file.originalname).toLowerCase()));
+
+    // checking mimeType
+    const mimeType = fileTypes.test(file.mimeType);
+
+    if (mimeType && extensionName) {
+        return cb(null, true);
+    } else {
+        cb('Just audio files allowed!!')
+    }
+}
 
 // connection to interventions_db
 
@@ -74,11 +110,19 @@ app.get('/posts', function (req, res) {
 })
 
 
-app.post('/addAudio', function (req, res) {
+app.post('/addAudio', (req, res) => {
+    upload(req, res, (err) => {
+
+        if (err) {
+            console.log("There is an error " + err)
+        } else {
+            console.log(req.file);
+            console.log("Obtained audio file!")
+        }
+    })
     console.log("Audio is successfully posted!")
-    console.log("Obtained audio data: ", req.body);
-    //console.log("Obtained param1: ", req.body.studentId);
-    //console.log("Obtained param2: ", req.body.date);
+    console.log("Obtained audio data: ", req.file);
+
 })
 
 app.post('/addSignal', function (req, res) {
