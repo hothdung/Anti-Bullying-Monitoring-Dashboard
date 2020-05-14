@@ -29,20 +29,23 @@ const storage = multer.diskStorage({
 // Init upload
 const upload = multer({
     storage: storage,
-    limits: { fileSize: 100000000 }
+    limits: { fileSize: 100000000 },
+    fileFilter: function (req, file, cb) {
+        checkFileType(file, cb);
+    }
 }).single('audioName');
 
 // checking the extension and mimeType
 function checkFileType(file, cb) {
 
-    const fileTypes = /mp4|m4a/;
+    const fileTypes = /m4a/;
     // checking extension
-    const extensionName = fileTypes.test(path.extname((file.originalname).toLowerCase()));
+    const extensionName = fileTypes.test(path.extname(file.originalname).toLowerCase());
+    console.log("Extension name: " + path.extname(file.originalname).toLowerCase());
 
     // checking mimeType
-    const mimeType = fileTypes.test(file.mimeType);
 
-    if (mimeType && extensionName) {
+    if (file.mimetype === "audio/m4a" && extensionName) {
         return cb(null, true);
     } else {
         cb('Just audio files allowed!!')
